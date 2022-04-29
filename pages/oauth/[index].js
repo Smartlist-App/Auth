@@ -8,11 +8,14 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const [showPassword, toggleShowPassword] = useState(false);
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
   // fetch data
@@ -31,7 +34,6 @@ function App() {
       password: ""
     },
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       fetch("https://api.smartlist.tech/v2/public/oauth/auth/", {
         method: "POST",
         body: new URLSearchParams({
@@ -105,6 +107,7 @@ function App() {
               label="Email"
               fullWidth
               name="email"
+              type="email"
               autoComplete={"off"}
               onChange={formik.handleChange}
               value={formik.values.email}
@@ -135,9 +138,26 @@ function App() {
               fullWidth
               sx={{ mb: 2 }}
               name="password"
+              type={!showPassword ? "text" : "password"}
               onChange={formik.handleChange}
               value={formik.values.password}
-              InputProps={{ sx: { borderRadius: 2 } }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => toggleShowPassword(!showPassword)}
+                      edge="end"
+                      sx={{ mr: 0.1 }}
+                    >
+                      <span className="material-symbols-rounded">
+                        {showPassword ? "visibility" : "visibility_off"}
+                      </span>
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                sx: { borderRadius: 2 }
+              }}
             />
             <Button
               type="submit"
