@@ -78,7 +78,7 @@ function App() {
 
   if (!data || loading)
     return (
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", pt: 10 }}>
         <CircularProgress disableShrink sx={{ animationDuration: ".6s" }} />
       </Box>
     );
