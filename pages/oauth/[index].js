@@ -56,7 +56,7 @@ function App() {
           let styles = {
             style: {
               borderRadius: "10px",
-              mkkk: "#333",
+              background: "#333",
               color: "#fff",
               padding: "10px",
               paddingLeft: "20px"
