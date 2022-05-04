@@ -2,6 +2,7 @@ body {
   background: url(https://i.ibb.co/31Grmz3/image.png);
   background-size: cover;
   background-repeat: no-repeat;
+  min-height: 100vh;
   padding-bottom: 40px;
   padding-top: 40px;
 }
