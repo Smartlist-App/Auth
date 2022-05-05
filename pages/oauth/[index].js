@@ -105,7 +105,7 @@ function App() {
               margin: "auto",
               mb: 2
             }}
-            src="https://smartlist.tech/app/img/logo/512x512.png"
+            src="https://cdn.jsdelivr.net/gh/Smartlist-App/Assets@master/img/logo/512x512.png"
           />
           <Typography gutterBottom variant="h4" sx={{ textAlign: "center" }}>
             Sign into {data.data.name}
