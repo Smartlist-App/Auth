@@ -27,7 +27,7 @@ export default function Render() {
     }
   });
   return (
-    <Box sx={{ textAlign: "center" }}>
+    <Box sx={{ textAlign: "center", mt: 5 }}>
       <Paper
         sx={{
           background: "rgba(255,255,255,.1)",
