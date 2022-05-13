@@ -27,14 +27,15 @@ export default function Render() {
     }
   });
   return (
-    <Box sx={{ textAlign: "left" }}>
+    <Box sx={{ textAlign: "center" }}>
       <Paper
         sx={{
           background: "rgba(255,255,255,.1)",
           borderRadius: 5,
           maxWidth: "100vw",
           width: "400px",
-          p: 5
+          p: 5,
+          mx: "auto"
         }}
         elevation={0}
       >
