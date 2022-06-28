@@ -48,9 +48,9 @@ export default function Render() {
             toast.success("Welcome to Smartlist!", styles);
             router.push(
               "/oauth/" + window &&
-                window.location.pathname
-                  .split("verify-your-email/")[1]
-                  .split("/")[0]
+              window.location.pathname
+                .split("verify-your-email/")[1]
+                .split("/")[0]
             );
           } else {
             toast.error(res.error, styles);
@@ -68,7 +68,7 @@ export default function Render() {
           borderRadius: 5,
           mt: 10,
           maxWidth: "100vw",
-          width: "400px",
+          width: { sm: "400px" },
           p: 5
         }}
         elevation={0}
@@ -125,7 +125,7 @@ export default function Render() {
           borderRadius: 5,
           mt: 1,
           maxWidth: "100vw",
-          width: "400px",
+          width: { sm: "400px" },
           p: 5
         }}
         elevation={0}

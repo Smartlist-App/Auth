@@ -33,7 +33,7 @@ export default function Render() {
           background: "rgba(255,255,255,.1)",
           borderRadius: 5,
           maxWidth: "100vw",
-          width: "400px",
+          width: { sm: "400px" },
           p: 5,
           mx: "auto"
         }}

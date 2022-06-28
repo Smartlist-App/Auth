@@ -46,9 +46,8 @@ export default function Render() {
           if (res.data) {
             // toast.success("", styles);
             router.push(
-              `/verify-your-email/${
-                typeof window !== "undefined" &&
-                window.location.pathname.split("signup/")[1]
+              `/verify-your-email/${typeof window !== "undefined" &&
+              window.location.pathname.split("signup/")[1]
               }/${res.data.id}`
             );
           } else {
@@ -66,7 +65,7 @@ export default function Render() {
           borderRadius: 5,
           mt: 10,
           maxWidth: "100vw",
-          width: "400px",
+          width: { sm: "400px" },
           p: 5
         }}
         elevation={0}
