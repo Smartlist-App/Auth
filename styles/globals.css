@@ -1,7 +1,5 @@
 body {
-  background: url(https://i.ibb.co/31Grmz3/image.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: #c4b5b5;
   min-height: 100vh;
   padding-bottom: 40px;
   padding-top: 40px;
@@ -10,7 +8,7 @@ body {
   animation-duration: 0.35s !important;
 }
 *:not(.material-symbols-rounded) {
-  font-family: "Outfit", sans-serif !important;
+  font-family: "Kantumruy Pro", sans-serif !important;
 }
 .MuiTouchRipple-child {
   filter: opacity(0.4) !important;

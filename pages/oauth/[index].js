@@ -68,7 +68,13 @@ function App() {
         });
     }
   });
-  if (error) return <div>An error has occured</div>;
+  if (error) return (
+  <Box 
+  sx={{
+    textAlign:"center"
+  }}
+  >An error has occured</Box>
+  );
 
   if (!data || loading)
     return (
@@ -80,10 +86,10 @@ function App() {
   // render data
   return (
     <>
-      <Box sx={{ textAlign: "center", mt: { sm: 9, xs: 4 } }}>
+      <Box sx={{ textAlign: "center", mt: { sm: 3, xs: 4 } }}>
         <Paper
           sx={{
-            background: { sm: "rgba(255,255,255,.1)", xs: "transparent" },
+            background: { xs: "transparent" },
             borderRadius: 5,
             mx: "auto",
             maxWidth: "100vw",
@@ -92,32 +98,33 @@ function App() {
           }}
           elevation={0}
         >
-          <Avatar
+          {window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" &&<Avatar
             sx={{
               width: 70,
               height: 70,
               margin: "auto",
-              mb: 2
+              mb: 3
             }}
-            src="https://cdn.jsdelivr.net/gh/Smartlist-App/Assets@master/img/logo/512x512.png"
-          />
-          <Typography gutterBottom variant="h4" sx={{ textAlign: "center" }}>
+            src={data.data.logo || "https://i.ibb.co/1vTLKw4/Carbon-Home-inventory-and-finance-tracking-5.png"}
+          />}
+          <Typography gutterBottom variant={window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" ? "h4": "h2"} sx={{  textAlign: "center", ...window.location.pathname.split("oauth/")[1] === "eccbc87e4b5ce2fe28308fd9f2a7baf3" && {my:4, mb:5}, ...window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" && {fontWeight:"700"} }}>
             Sign into {data.data.name}
           </Typography>
-          <Typography sx={{ mb: 2, textAlign: "center" }}>
-            With your Smartlist account
-          </Typography>
+         {window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" && <Typography sx={{ mb: 2, textAlign: "center" }}>
+            Using your Carbon account
+          </Typography>}
+      
           <form onSubmit={formik.handleSubmit}>
             <TextField
               autoFocus
-              label="Email"
+              label="Your email"
               fullWidth
               name="email"
               type="email"
               autoComplete={"off"}
               onChange={formik.handleChange}
               value={formik.values.email}
-              InputProps={{ sx: { borderRadius: 2 } }}
+              InputProps={{ sx: { borderRadius: 2, fontWeight:"700" } }}
             />
             <Link
               href={
@@ -162,7 +169,7 @@ function App() {
                     </IconButton>
                   </InputAdornment>
                 ),
-                sx: { borderRadius: 2 }
+                sx: { borderRadius: 2, fontWeight:"700" }
               }}
             />
             <LoadingButton
@@ -171,7 +178,9 @@ function App() {
               variant="contained"
               fullWidth
               sx={{
-                borderRadius: 4,
+                py: 2,
+                borderRadius: 2,
+                mt: 2,
                 textTransform: "none",
                 transition: "none"
               }}
