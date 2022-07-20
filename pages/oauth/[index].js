@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import useSWR from "swr";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import Cookies from "universal-cookie";
 import LoadingButton from "@mui/lab/LoadingButton";
+import emailjs from '@emailjs/browser';
 
 function App() {
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -62,7 +63,14 @@ function App() {
           } else {
             cookies.set("accessToken", res.data.access_token, { path: "/" });
             // toast.success("Success!", styles);
-            window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+            emailjs.send('service_bhq01y6', 'template_nbjdq1i', {
+              to_email: values.email
+            }, "6Q4BZ_DN9bCSJFZYM")
+            .then(() => {
+              window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+            }, () => {
+              window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+            }).catch(err => alert(err));
             setLoading(true);
           }
         });
