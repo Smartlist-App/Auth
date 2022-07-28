@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import router from "next/router";
 
 export default function Render() {
   const [loading, setLoading] = useState(false);
@@ -45,11 +44,12 @@ export default function Render() {
           setLoading(false);
           if (res.data) {
             // toast.success("", styles);
-            router.push(
-              `/verify-your-email/${typeof window !== "undefined" &&
-              window.location.pathname.split("signup/")[1]
-              }/${res.data.id}`
-            );
+            // router.push(
+            //   `/verify-your-email/${typeof window !== "undefined" &&
+            //   window.location.pathname.split("signup/")[1]
+            //   }/${res.data.id}`
+            // );
+            window.location.href = "https://my.smartlist.tech/onboarding"
           } else {
             toast.error(res.error, styles);
           }

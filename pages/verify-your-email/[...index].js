@@ -46,12 +46,7 @@ export default function Render() {
           };
           if (res.success) {
             toast.success("Welcome to Smartlist!", styles);
-            router.push(
-              "/oauth/" + window &&
-              window.location.pathname
-                .split("verify-your-email/")[1]
-                .split("/")[0]
-            );
+            router.push("https://my.smartlist.tech");
           } else {
             toast.error(res.error, styles);
           }
@@ -86,7 +81,7 @@ export default function Render() {
             fullWidth
             sx={{ mb: 2 }}
             name="code"
-            required
+            // required
             autoComplete={"off"}
             onChange={formik.handleChange}
             value={formik.values.code}
