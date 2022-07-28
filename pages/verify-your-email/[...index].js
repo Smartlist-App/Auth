@@ -126,7 +126,7 @@ export default function Render() {
         elevation={0}
       >
         <Typography gutterBottom variant="h5">
-          Didn't recieve a code?
+          Didn&apos;t recieve a code?
         </Typography>
         <Typography sx={{ mb: 2 }}>
           Before retrying, make sure you check your spam folder
@@ -177,7 +177,7 @@ export default function Render() {
           />
         </Box>
         <Typography sx={{ mt: 2 }}>
-          Still didn't recieve an email? Contact us at hello@smartlist.tech
+          Still didn&apos;t recieve an email? Contact us at hello@smartlist.tech
         </Typography>
       </Paper>
 

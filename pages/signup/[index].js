@@ -71,7 +71,7 @@ export default function Render() {
         elevation={0}
       >
         <Typography gutterBottom variant="h5">
-          Let's get started!
+          Let&apos;s get started!
         </Typography>
         <Typography sx={{ mb: 2 }}>
           Create a Smartlist account to track your finances, inventory, and

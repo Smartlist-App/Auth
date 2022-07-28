@@ -43,7 +43,7 @@ export default function Render() {
           Forgot your password?
         </Typography>
         <Typography sx={{ mb: 2 }}>
-          Enter your email, and we'll send you a link to reset your password
+          Enter your email, and we&apos;ll send you a link to reset your password
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <TextField
