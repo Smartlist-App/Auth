@@ -76,7 +76,7 @@ function App() {
           } else {
             // alert("Login successful! Token: " + res.token);
             cookies.set("accessToken", res.token, { path: "/" });
-            window.location.href = `${res.redirectUri}?token=${res.redirectUri}`;
+            window.location.href = `${res.redirectUri}?token=${res.token}`;
             // toast.success("Success!", styles);
             // emailjs
             //   .send(
