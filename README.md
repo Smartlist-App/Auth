@@ -1,3 +1,2 @@
 # Smartlist-App/Auth
-
-This is the login page for Smartlist!
+## oAuth functionality for Carbon
