@@ -3,6 +3,8 @@ import useSWR from "swr";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -20,8 +22,10 @@ function App() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useState(true);
+  const [show2fa, setShow2fa] = useState(false);
   const fetcher = (e: any, o: any) => fetch(e, o).then((res) => res.json());
   const cookies = new Cookies();
+
   const url = "https://api.smartlist.tech/v2/public/oauth/fetch-app/";
   const { data, error } = useSWR(url, () =>
     fetcher(url, {
@@ -35,15 +39,19 @@ function App() {
     initialValues: {
       email: "",
       password: "",
+      twoFactorCode: "",
     },
     onSubmit: (values) => {
       setButtonLoading(true);
-      fetch("https://api.smartlist.tech/v2/public/oauth/auth/", {
+      fetch("/api/auth", {
         method: "POST",
         body: new URLSearchParams({
           appId: window.location.pathname.split("oauth/")[1],
           email: values.email,
           password: values.password,
+          ...(show2fa && {
+            twoFactorCode: values.twoFactorCode,
+          }),
         }),
       })
         .then((res) => res.json())
@@ -58,29 +66,33 @@ function App() {
             },
           };
           setButtonLoading(false);
-          if (res.success === false) {
-            toast.error(res.error, styles);
+          if (res.success === false && res["2fa"] === false) {
+            toast.error("Invalid email or password", styles);
+          } else if (res.success === false && res["2fa"] === true) {
+            setShow2fa(true);
           } else {
-            cookies.set("accessToken", res.data.access_token, { path: "/" });
+            // alert("Login successful! Token: " + res.token);
+            cookies.set("accessToken", res.token, { path: "/" });
+            window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
             // toast.success("Success!", styles);
-            emailjs
-              .send(
-                "service_bhq01y6",
-                "template_nbjdq1i",
-                {
-                  to_email: values.email,
-                },
-                "6Q4BZ_DN9bCSJFZYM"
-              )
-              .then(
-                () => {
-                  window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
-                },
-                () => {
-                  window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
-                }
-              )
-              .catch((err) => alert(err));
+            // emailjs
+            //   .send(
+            //     "service_bhq01y6",
+            //     "template_nbjdq1i",
+            //     {
+            //       to_email: values.email,
+            //     },
+            //     "6Q4BZ_DN9bCSJFZYM"
+            //   )
+            //   .then(
+            //     () => {
+            //       window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+            //     },
+            //     () => {
+            //       window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+            //     }
+            //   )
+            //   .catch((err) => alert(err));
             setLoading(true);
           }
         });
@@ -160,6 +172,67 @@ function App() {
           )}
 
           <form onSubmit={formik.handleSubmit}>
+            <Dialog
+              open={show2fa}
+              keepMounted
+              BackdropProps={{
+                sx: {
+                  background: "rgba(0,0,0,0.2)",
+                  backdropFilter: "blur(15px)",
+                },
+              }}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  borderRadius: 5,
+                  width: "500px",
+                  maxWidth: "calc(100vw - 10px)",
+                },
+              }}
+              onClose={() => setShow2fa(false)}
+            >
+              <DialogContent sx={{ p: 5 }}>
+                <Typography variant="h5" sx={{ mb: 1, fontWeight: "600" }}>
+                  2-factor authentication
+                </Typography>
+                <Typography sx={{ mb: 3 }}>
+                  Enter the six-digit code on the Google Authenticator app.
+                </Typography>
+                <TextField
+                  autoFocus
+                  name="twoFactorCode"
+                  value={formik.values.twoFactorCode}
+                  onChange={formik.handleChange}
+                  variant="filled"
+                  placeholder="******"
+                  label="6 digit code (no spaces)"
+                  fullWidth
+                />
+                <LoadingButton
+                  loading={buttonLoading}
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  onClick={() => document.getElementById("_loading")!.click()}
+                  sx={{
+                    py: 1,
+                    borderRadius: 2,
+                    mt: 2,
+                    textTransform: "none",
+                    transition: "none",
+                  }}
+                  disableElevation
+                >
+                  Verify
+                  <span
+                    style={{ marginLeft: "10px" }}
+                    className="material-symbols-rounded"
+                  >
+                    chevron_right
+                  </span>
+                </LoadingButton>
+              </DialogContent>
+            </Dialog>
             <TextField
               autoFocus
               label="Your email"
@@ -221,6 +294,7 @@ function App() {
               loading={buttonLoading}
               type="submit"
               variant="contained"
+              id="_loading"
               fullWidth
               sx={{
                 py: 2,
