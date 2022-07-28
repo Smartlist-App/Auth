@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const handler = async (req: any, res: any) => {
   try {
-    // Fetch emails from DB
+    // Fetch account emails from DB
     const result: any = await excuteQuery({
       query: "SELECT * FROM Accounts WHERE email = ? LIMIT 1",
       values: [req.body.email ?? "false"],
