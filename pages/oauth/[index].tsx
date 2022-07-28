@@ -69,11 +69,14 @@ function App() {
           if (res.success === false && res["2fa"] === false) {
             toast.error("Invalid email or password", styles);
           } else if (res.success === false && res["2fa"] === true) {
+            if (show2fa === true) {
+              toast.error("Invalid 2FA code", styles);
+            }
             setShow2fa(true);
           } else {
             // alert("Login successful! Token: " + res.token);
             cookies.set("accessToken", res.token, { path: "/" });
-            window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+            window.location.href = `${res.redirectUri}?token=${res.redirectUri}`;
             // toast.success("Success!", styles);
             // emailjs
             //   .send(
