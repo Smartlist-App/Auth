@@ -59,10 +59,17 @@ const handler = async (req: any, res: any) => {
       return;
     }
 
+    const accessToken = uuidv4();
+    await excuteQuery({
+      query: "INSERT INTO UserTokens (user, token)",
+      values: [result[0]["id"], accessToken],
+    });
+
     // Return data
     res.json({
       success: result,
       "2fa": false,
+      accessToken: accessToken,
     });
   } catch (error) {
     res.status(500).json({ error: error });
