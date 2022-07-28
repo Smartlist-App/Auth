@@ -14,27 +14,27 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import Cookies from "universal-cookie";
 import LoadingButton from "@mui/lab/LoadingButton";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 
 function App() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useState(true);
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const fetcher = (e: any, o: any) => fetch(e, o).then((res) => res.json());
   const cookies = new Cookies();
   const url = "https://api.smartlist.tech/v2/public/oauth/fetch-app/";
   const { data, error } = useSWR(url, () =>
     fetcher(url, {
       method: "POST",
       body: new URLSearchParams({
-        appId: window.location.pathname.split("oauth/")[1]
-      })
+        appId: window.location.pathname.split("oauth/")[1],
+      }),
     })
   );
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
     },
     onSubmit: (values) => {
       setButtonLoading(true);
@@ -43,8 +43,8 @@ function App() {
         body: new URLSearchParams({
           appId: window.location.pathname.split("oauth/")[1],
           email: values.email,
-          password: values.password
-        })
+          password: values.password,
+        }),
       })
         .then((res) => res.json())
         .then((res) => {
@@ -54,8 +54,8 @@ function App() {
               background: "#333",
               color: "#fff",
               padding: "10px",
-              paddingLeft: "20px"
-            }
+              paddingLeft: "20px",
+            },
           };
           setButtonLoading(false);
           if (res.success === false) {
@@ -63,26 +63,39 @@ function App() {
           } else {
             cookies.set("accessToken", res.data.access_token, { path: "/" });
             // toast.success("Success!", styles);
-            emailjs.send('service_bhq01y6', 'template_nbjdq1i', {
-              to_email: values.email
-            }, "6Q4BZ_DN9bCSJFZYM")
-            .then(() => {
-              window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
-            }, () => {
-              window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
-            }).catch(err => alert(err));
+            emailjs
+              .send(
+                "service_bhq01y6",
+                "template_nbjdq1i",
+                {
+                  to_email: values.email,
+                },
+                "6Q4BZ_DN9bCSJFZYM"
+              )
+              .then(
+                () => {
+                  window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+                },
+                () => {
+                  window.location.href = `${res.data.redirect_uri}?token=${res.data.token}`;
+                }
+              )
+              .catch((err) => alert(err));
             setLoading(true);
           }
         });
-    }
+    },
   });
-  if (error) return (
-  <Box 
-  sx={{
-    textAlign:"center"
-  }}
-  >An error has occured</Box>
-  );
+  if (error)
+    return (
+      <Box
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        An error has occured
+      </Box>
+    );
 
   if (!data || loading)
     return (
@@ -102,26 +115,50 @@ function App() {
             mx: "auto",
             maxWidth: "100vw",
             width: { sm: "400px" },
-            p: 5
+            p: 5,
           }}
           elevation={0}
         >
-          {window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" &&<Avatar
+          {window.location.pathname.split("oauth/")[1] !==
+            "eccbc87e4b5ce2fe28308fd9f2a7baf3" && (
+            <Avatar
+              sx={{
+                width: 70,
+                height: 70,
+                margin: "auto",
+                mb: 3,
+              }}
+              src={
+                data.data.logo ||
+                "https://i.ibb.co/1vTLKw4/Carbon-Home-inventory-and-finance-tracking-5.png"
+              }
+            />
+          )}
+          <Typography
+            gutterBottom
+            variant={
+              window.location.pathname.split("oauth/")[1] !==
+              "eccbc87e4b5ce2fe28308fd9f2a7baf3"
+                ? "h4"
+                : "h2"
+            }
             sx={{
-              width: 70,
-              height: 70,
-              margin: "auto",
-              mb: 3
+              textAlign: "center",
+              ...(window.location.pathname.split("oauth/")[1] ===
+                "eccbc87e4b5ce2fe28308fd9f2a7baf3" && { my: 4, mb: 5 }),
+              ...(window.location.pathname.split("oauth/")[1] !==
+                "eccbc87e4b5ce2fe28308fd9f2a7baf3" && { fontWeight: "700" }),
             }}
-            src={data.data.logo || "https://i.ibb.co/1vTLKw4/Carbon-Home-inventory-and-finance-tracking-5.png"}
-          />}
-          <Typography gutterBottom variant={window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" ? "h4": "h2"} sx={{  textAlign: "center", ...window.location.pathname.split("oauth/")[1] === "eccbc87e4b5ce2fe28308fd9f2a7baf3" && {my:4, mb:5}, ...window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" && {fontWeight:"700"} }}>
+          >
             Sign into {data.data.name}
           </Typography>
-         {window.location.pathname.split("oauth/")[1] !== "eccbc87e4b5ce2fe28308fd9f2a7baf3" && <Typography sx={{ mb: 2, textAlign: "center" }}>
-            Using your Carbon account
-          </Typography>}
-      
+          {window.location.pathname.split("oauth/")[1] !==
+            "eccbc87e4b5ce2fe28308fd9f2a7baf3" && (
+            <Typography sx={{ mb: 2, textAlign: "center" }}>
+              Using your Carbon account
+            </Typography>
+          )}
+
           <form onSubmit={formik.handleSubmit}>
             <TextField
               autoFocus
@@ -132,7 +169,7 @@ function App() {
               autoComplete={"off"}
               onChange={formik.handleChange}
               value={formik.values.email}
-              InputProps={{ sx: { borderRadius: 2, fontWeight:"700" } }}
+              InputProps={{ sx: { borderRadius: 2, fontWeight: "700" } }}
             />
             <Link
               href={
@@ -147,7 +184,7 @@ function App() {
                   py: 0,
                   transition: "none",
                   float: "right",
-                  "&:hover": { textDecoration: "underline" }
+                  "&:hover": { textDecoration: "underline" },
                 }}
               >
                 Forgot password?
@@ -177,7 +214,7 @@ function App() {
                     </IconButton>
                   </InputAdornment>
                 ),
-                sx: { borderRadius: 2, fontWeight:"700" }
+                sx: { borderRadius: 2, fontWeight: "700" },
               }}
             />
             <LoadingButton
@@ -190,7 +227,7 @@ function App() {
                 borderRadius: 2,
                 mt: 2,
                 textTransform: "none",
-                transition: "none"
+                transition: "none",
               }}
               disableElevation
               size="large"
@@ -212,7 +249,7 @@ function App() {
               mt: 1,
               py: 0,
               transition: "none",
-              "&:hover": { textDecoration: "underline" }
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             Create an account
