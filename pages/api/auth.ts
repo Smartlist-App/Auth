@@ -63,6 +63,7 @@ const handler = async (req: any, res: any) => {
         token: accessToken,
         redirectUri: app[0]["redirect_uri"],
       });
+      return;
     }
 
     const key = result[0]["2faCode"];
