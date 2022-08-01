@@ -11,7 +11,7 @@ export default function Render() {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
     },
     onSubmit: (values) => {
       let styles = {
@@ -20,11 +20,11 @@ export default function Render() {
           background: "#333",
           color: "#fff",
           padding: "10px",
-          paddingLeft: "20px"
-        }
+          paddingLeft: "20px",
+        },
       };
       toast.error("Password reset feature coming soon!", styles);
-    }
+    },
   });
   return (
     <Box sx={{ textAlign: "center", mt: 5 }}>
@@ -35,7 +35,7 @@ export default function Render() {
           maxWidth: "100vw",
           width: { sm: "400px" },
           p: 5,
-          mx: "auto"
+          mx: "auto",
         }}
         elevation={0}
       >
@@ -43,7 +43,8 @@ export default function Render() {
           Forgot your password?
         </Typography>
         <Typography sx={{ mb: 2 }}>
-          Enter your email, and we'll send you a link to reset your password
+          Enter your email, and we&apos;ll send you a link to reset your
+          password
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <TextField
@@ -63,7 +64,7 @@ export default function Render() {
               borderRadius: 4,
               mt: 2,
               textTransform: "none",
-              transition: "none"
+              transition: "none",
             }}
             disableElevation
             size="large"
@@ -92,7 +93,7 @@ export default function Render() {
               mt: 1,
               py: 0,
               transition: "none",
-              "&:hover": { textDecoration: "underline" }
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             Back to login

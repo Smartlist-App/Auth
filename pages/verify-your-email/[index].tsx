@@ -17,7 +17,7 @@ export default function Render() {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      code: ""
+      code: "",
     },
     onSubmit: (values) => {
       setLoading(true);
@@ -29,8 +29,8 @@ export default function Render() {
             id: window.location.pathname
               .split("verify-your-email/")[1]
               .split("/")[1],
-            code: values.code
-          })
+            code: values.code,
+          }),
         }
       )
         .then((res) => res.json())
@@ -41,23 +41,18 @@ export default function Render() {
               background: "#333",
               color: "#fff",
               padding: "10px",
-              paddingLeft: "20px"
-            }
+              paddingLeft: "20px",
+            },
           };
           if (res.success) {
             toast.success("Welcome to Smartlist!", styles);
-            router.push(
-              "/oauth/" + window &&
-              window.location.pathname
-                .split("verify-your-email/")[1]
-                .split("/")[0]
-            );
+            router.push("https://my.smartlist.tech");
           } else {
             toast.error(res.error, styles);
           }
           setLoading(false);
         });
-    }
+    },
   });
   return (
     <Box sx={{ textAlign: "left" }}>
@@ -69,7 +64,7 @@ export default function Render() {
           mt: 10,
           maxWidth: "100vw",
           width: { sm: "400px" },
-          p: 5
+          p: 5,
         }}
         elevation={0}
       >
@@ -86,7 +81,7 @@ export default function Render() {
             fullWidth
             sx={{ mb: 2 }}
             name="code"
-            required
+            // required
             autoComplete={"off"}
             onChange={formik.handleChange}
             value={formik.values.code}
@@ -102,7 +97,7 @@ export default function Render() {
               borderRadius: 4,
               mt: 2,
               textTransform: "none",
-              transition: "none"
+              transition: "none",
             }}
             disableElevation
             size="large"
@@ -126,12 +121,12 @@ export default function Render() {
           mt: 1,
           maxWidth: "100vw",
           width: { sm: "400px" },
-          p: 5
+          p: 5,
         }}
         elevation={0}
       >
         <Typography gutterBottom variant="h5">
-          Didn't recieve a code?
+          Didn&apos;t recieve a code?
         </Typography>
         <Typography sx={{ mb: 2 }}>
           Before retrying, make sure you check your spam folder
@@ -142,7 +137,7 @@ export default function Render() {
             overflow: "hidden",
             width: "300px",
             height: "75px",
-            boxShadow: 4
+            boxShadow: 4,
           }}
         >
           <HCaptcha
@@ -154,8 +149,8 @@ export default function Render() {
                   background: "#333",
                   color: "#fff",
                   padding: "10px",
-                  paddingLeft: "20px"
-                }
+                  paddingLeft: "20px",
+                },
               };
               fetch(
                 "https://api.smartlist.tech/v2/public/oauth/signup/email/",
@@ -165,8 +160,8 @@ export default function Render() {
                     id: window.location.pathname
                       .split("verify-your-email/")[1]
                       .split("/")[1],
-                    "h-captcha-response": token
-                  })
+                    "h-captcha-response": token,
+                  }),
                 }
               )
                 .then((res) => res.json())
@@ -182,7 +177,7 @@ export default function Render() {
           />
         </Box>
         <Typography sx={{ mt: 2 }}>
-          Still didn't recieve an email? Contact us at hello@smartlist.tech
+          Still didn&apos;t recieve an email? Contact us at hello@smartlist.tech
         </Typography>
       </Paper>
 
@@ -202,7 +197,7 @@ export default function Render() {
               mt: 1,
               py: 0,
               transition: "none",
-              "&:hover": { textDecoration: "underline" }
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             Back to login

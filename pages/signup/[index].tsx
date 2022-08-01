@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import router from "next/router";
 
 export default function Render() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +18,7 @@ export default function Render() {
     initialValues: {
       name: "",
       email: "",
-      password: ""
+      password: "",
     },
     onSubmit: (values) => {
       setLoading(true);
@@ -29,32 +28,33 @@ export default function Render() {
           background: "#333",
           color: "#fff",
           padding: "10px",
-          paddingLeft: "20px"
-        }
+          paddingLeft: "20px",
+        },
       };
       fetch("https://api.smartlist.tech/v2/public/oauth/signup/", {
         method: "POST",
         body: new URLSearchParams({
           name: values.name,
           email: values.email,
-          password: values.password
-        })
+          password: values.password,
+        }),
       })
         .then((res) => res.json())
         .then((res) => {
           setLoading(false);
           if (res.data) {
             // toast.success("", styles);
-            router.push(
-              `/verify-your-email/${typeof window !== "undefined" &&
-              window.location.pathname.split("signup/")[1]
-              }/${res.data.id}`
-            );
+            // router.push(
+            //   `/verify-your-email/${typeof window !== "undefined" &&
+            //   window.location.pathname.split("signup/")[1]
+            //   }/${res.data.id}`
+            // );
+            window.location.href = "https://my.smartlist.tech/onboarding";
           } else {
             toast.error(res.error, styles);
           }
         });
-    }
+    },
   });
   return (
     <Box sx={{ textAlign: "left" }}>
@@ -66,12 +66,12 @@ export default function Render() {
           mt: 10,
           maxWidth: "100vw",
           width: { sm: "400px" },
-          p: 5
+          p: 5,
         }}
         elevation={0}
       >
         <Typography gutterBottom variant="h5">
-          Let's get started!
+          Let&apos;s get started!
         </Typography>
         <Typography sx={{ mb: 2 }}>
           Create a Smartlist account to track your finances, inventory, and
@@ -126,7 +126,7 @@ export default function Render() {
                   </IconButton>
                 </InputAdornment>
               ),
-              sx: { borderRadius: 2 }
+              sx: { borderRadius: 2 },
             }}
           />
           <LoadingButton
@@ -138,7 +138,7 @@ export default function Render() {
               borderRadius: 4,
               mt: 2,
               textTransform: "none",
-              transition: "none"
+              transition: "none",
             }}
             disableElevation
             size="large"
@@ -167,7 +167,7 @@ export default function Render() {
               mt: 1,
               py: 0,
               transition: "none",
-              "&:hover": { textDecoration: "underline" }
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             Back to login

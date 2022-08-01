@@ -1,3 +1,2 @@
-# Smartlist-App/Auth
-
-This is the login page for Smartlist
+# Carbon Auth
+## This repository contains source code for the Carbon login/signup page
